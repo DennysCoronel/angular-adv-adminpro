@@ -12,11 +12,7 @@ import { AuthModule } from './auth/auth.module';
 import { NopagfoundComponent } from './nopagfound/nopagfound.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NopagfoundComponent,
-
-  ],
+  declarations: [AppComponent, NopagfoundComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
