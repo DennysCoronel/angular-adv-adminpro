@@ -11,6 +11,7 @@ import { SharedModule } from '../shared/shared.module';
 import { AppRoutingModule } from '../app-routing.module';
 import { CompomentrsModule } from '../components/compomentrs.module';
 import { ChartsModule } from 'ng2-charts';
+import { AccountSettingComponent } from './account-setting/account-setting.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { ChartsModule } from 'ng2-charts';
     Grafica1Component,
     PagesComponent,
     DashboardComponent,
+    AccountSettingComponent,
   ],
   exports: [
     ProgressComponent,
