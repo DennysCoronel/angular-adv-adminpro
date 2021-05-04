@@ -5,6 +5,8 @@ import { Grafica1Component } from './grafica1/grafica1.component';
 import { ProgressComponent } from './progress/progress.component';
 import { PagesComponent } from './pages.component';
 import { AccountSettingComponent } from './account-setting/account-setting.component';
+import { PromesasComponent } from './promesas/promesas.component';
+import { RxjsComponent } from './rxjs/rxjs.component';
 
 const routes: Routes = [
   //dentro del logeo
@@ -12,10 +14,28 @@ const routes: Routes = [
     path: 'dashboard',
     component: PagesComponent,
     children: [
-      { path: '', component: DashboardComponent },
-      { path: 'grafica1', component: Grafica1Component },
-      { path: 'progress', component: ProgressComponent },
-      { path: 'accountSetting', component: AccountSettingComponent },
+      { path: '', component: DashboardComponent, data: { titulo: 'Inicio' } },
+      {
+        path: 'grafica1',
+        component: Grafica1Component,
+        data: { titulo: 'Grafico' },
+      },
+      {
+        path: 'progress',
+        component: ProgressComponent,
+        data: { titulo: 'Progress' },
+      },
+      {
+        path: 'accountSetting',
+        component: AccountSettingComponent,
+        data: { titulo: 'Configuraciones' },
+      },
+      {
+        path: 'promesas',
+        component: PromesasComponent,
+        data: { titulo: 'Promesas' }, 
+      },
+      { path: 'rxjs', component: RxjsComponent, data: { titulo: 'RXJS' } },
     ],
   },
 ];

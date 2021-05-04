@@ -12,6 +12,8 @@ import { AppRoutingModule } from '../app-routing.module';
 import { CompomentrsModule } from '../components/compomentrs.module';
 import { ChartsModule } from 'ng2-charts';
 import { AccountSettingComponent } from './account-setting/account-setting.component';
+import { PromesasComponent } from './promesas/promesas.component';
+import { RxjsComponent } from './rxjs/rxjs.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,8 @@ import { AccountSettingComponent } from './account-setting/account-setting.compo
     PagesComponent,
     DashboardComponent,
     AccountSettingComponent,
+    PromesasComponent,
+    RxjsComponent,
   ],
   exports: [
     ProgressComponent,
