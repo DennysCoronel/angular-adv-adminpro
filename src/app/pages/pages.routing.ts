@@ -7,12 +7,14 @@ import { PagesComponent } from './pages.component';
 import { AccountSettingComponent } from './account-setting/account-setting.component';
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
+import { AuthGuard } from '../guards/auth.guard';
 
 const routes: Routes = [
   //dentro del logeo
   {
     path: 'dashboard',
     component: PagesComponent,
+    canActivate:[AuthGuard],
     children: [
       { path: '', component: DashboardComponent, data: { titulo: 'Inicio' } },
       {
@@ -33,7 +35,7 @@ const routes: Routes = [
       {
         path: 'promesas',
         component: PromesasComponent,
-        data: { titulo: 'Promesas' }, 
+        data: { titulo: 'Promesas' },
       },
       { path: 'rxjs', component: RxjsComponent, data: { titulo: 'RXJS' } },
     ],

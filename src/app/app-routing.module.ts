@@ -13,11 +13,11 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [],
   imports: [
     RouterModule.forRoot(routes),
     PagesRoutingModule,
     AuthRoutingModule,
   ],
+  exports: [ RouterModule ]
 })
 export class AppRoutingModule {}
