@@ -1,11 +1,15 @@
 import { Injectable, NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { RegisterForm } from '../interfaces/register-form.interface';
-import { environment } from 'src/environments/environment';
-import { LoginForm } from '../interfaces/login-form.interface';
 import { tap, map, catchError } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
+
+import { environment } from 'src/environments/environment';
+
+import { RegisterForm } from '../interfaces/register-form.interface';
+import { LoginForm } from '../interfaces/login-form.interface';
+
+import { Usuario } from '../models/usuario.model';
 
 const baseUrl = environment.base_url;
 
@@ -14,28 +18,38 @@ declare const gapi: any;
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class UsuariosService {
 
-  constructor(private _ngZone: NgZone, private http: HttpClient, private router: Router) {
+  public auth2: any;
+  public usuario!: Usuario;
+
+
+
+  constructor(private http: HttpClient,
+    private _ngZone: NgZone,
+    private router: Router) {
+
 
     this.googleInit();
   }
 
-  public auth2: any;
+
 
   valodartoken(): Observable<boolean> {
 
     const token = localStorage.getItem('token') || '';
-    console.log(token);
-
-
-
     return this.http.get(`${baseUrl}/login/renew`, { headers: { 'x-token': token } }).pipe(
-      tap((resp: any) => {
-        localStorage.setItem('token', resp.token)
+      map((resp: any) => {
+
+        const { email, estado, google, img, nombreUsuario, role, id, nombres, apellidos } = resp.usuario;
+        this.usuario = new Usuario(nombreUsuario, email, id, nombres, apellidos, role, img, google, estado, '',);
+        localStorage.setItem('token', resp.token);
+        return true;
       }),
-      map(resp => true),
-      catchError(err => of(false))
+      catchError(err => of(false)
+      )
     );
   }
 
@@ -76,14 +90,8 @@ export class UsuariosService {
       this._ngZone.run(() => {
         this.router.navigateByUrl('/login');
       });
-
-
-
     });
   }
-
-
-
 
   googleInit() {
 
@@ -97,6 +105,25 @@ export class UsuariosService {
         resolve();
       });
     })
- }
+  }
+
+  get token(): string {
+
+    return localStorage.getItem('token') || '';
+  }
+
+  get id(): string {
+    return this.usuario.id || ' ';
+  }
+
+  actulizarPerfil(data: { email: string, nombreusuario: string, nombres: string, apellidos: string }) {
+    console.log(`${baseUrl}/usuarios/${this.id}`);
+    return this.http.put(`${baseUrl}/usuarios/${this.id}`, data, { headers: { 'x-token': this.token } });
+
+  }
+
+
+
+
 }
 

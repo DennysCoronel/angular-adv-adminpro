@@ -6,9 +6,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { UsuariosService } from '../../services/usuarios.service';
 
-
-
-
 declare const gapi: any;
 
 
@@ -17,6 +14,8 @@ declare const gapi: any;
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
+
+
 export class LoginComponent implements OnInit {
 
   public formsSUbmitted = false;
@@ -39,6 +38,7 @@ export class LoginComponent implements OnInit {
     this.usuariosService.login(this.loginForm.value)
       .subscribe(resp => {
         Swal.fire('success', 'Bienvenido', 'success');
+
         if (this.loginForm.get('remember')?.value) {
           localStorage.setItem('nombreUsuario', this.loginForm.get('nombreUsuario')?.value);
         } else {
@@ -84,13 +84,15 @@ export class LoginComponent implements OnInit {
     this.auth2.attachClickHandler(element, {},
       (googleUser: any) => {
         var id_token = googleUser.getAuthResponse().id_token;
+        const a = this.usuariosService.googlelogin(id_token).subscribe(resp => {
 
-        const a = this.usuariosService.googlelogin(id_token).subscribe();
+          this._ngZone.run(() => {
+            this.router.navigateByUrl('/');
+          });
 
-        this._ngZone.run(() => {
-          this.router.navigateByUrl('/');
+        }, (err) => {
+          Swal.fire('Error', err.error.msg, 'error');
         });
-
       }, function (error: any) {
         alert(JSON.stringify(error, undefined, 2));
       });
